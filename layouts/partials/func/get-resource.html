@@ -30,7 +30,7 @@
         {{- with resources.Get $u.Path }} {{- /* Site */}}
             {{- $r = . }}
         {{- else }}
-        {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+            {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
         {{- end }}   
     {{- end }}
 {{- end }}
