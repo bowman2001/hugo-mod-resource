@@ -22,7 +22,7 @@
     <dt>Remote resource</dt>
     <dd>Get an image from 'https://picsum.photos/100/50': {{ $remote }}</dd>
 </dl>
-<h2>Missing resources</h2>
+<h3>Missing resources</h3>
 <p>Depending on the error level the function ignores them, warns about them or breaks the build. The tests here lead to empty variables and <code>get-resource</code> writes a warning to the console:</p>
 {{- $missing := partial "get-resource" (dict "src" "missing.yaml" "ctx" . "errorLevel" "warning") }}
 {{- $remotemissing := partial "get-resource" (dict "src" "https://picsum/100/50" "ctx" . "errorLevel" "warning") }}
