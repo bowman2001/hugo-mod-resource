@@ -1,2 +1,3 @@
-# hugo-mod-
+# hugo-mod-resource
+
 Hugo module 

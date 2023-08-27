@@ -1,0 +1,37 @@
+{{- $name := "hugo-mod-resource – partial get-resource" }}
+
+{{- /* Initialize local variables with the values from the context map */}}
+{{- $ctx := .ctx }}
+{{- $src := .src }}
+{{- $errorLevel := .errorLevel }}
+
+{{- $u := urls.Parse $src }}
+{{- $errorMsg := printf "Unable to resolve the resource %q." $u.String }}
+
+{{- $r := "" }}
+{{- if $u.IsAbs }} {{- /* Remote */}}
+    {{- with resources.GetRemote $u.String }}
+        {{- with .Err }}
+            {{- partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" .Err "errorLevel" $errorLevel )}}
+        {{- else }}
+            {{- $r = . }}
+        {{ end }}
+    {{- else }}
+        {{- partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+    {{- end }}
+{{- else }}
+    {{- with $page.Resources.GetMatch (strings.TrimPrefix "./" $u.Path) }} {{- /* Page */}}
+        {{- $r = . }}
+    {{- else }}
+        {{- /* Fallback: Search in associated pages */}}
+    {{- end }}    
+    {{- if not $r }}
+        {{- with resources.Get $u.Path }} {{- /* Site */}}
+            {{- $r = . }}
+        {{- else }}
+        {{- partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+        {{- end }}   
+    {{- end }}
+{{- end }}
+
+{{- return $r }}
