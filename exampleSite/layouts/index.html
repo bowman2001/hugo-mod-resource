@@ -9,5 +9,6 @@
 <body>
 <h1>{{ .Title | site.Home.RenderString }}</h1>
 {{ .Content }}
+{{- partial "get-resource" (dict "src" "style.css" "ctx" . "errorLevel" "warning") }}
 </body>
 </html>
