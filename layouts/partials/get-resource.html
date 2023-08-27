@@ -6,21 +6,22 @@
 {{- $errorLevel := .errorLevel }}
 
 {{- $u := urls.Parse $src }}
-{{- $errorMsg := printf "Unable to resolve the resource %q." $u.String }}
+{{- $errorMsg := printf "Unable to resolve the resource %q" $u.String }}
 
 {{- $r := "" }}
 {{- if $u.IsAbs }} {{- /* Remote */}}
     {{- with resources.GetRemote $u.String }}
         {{- with .Err }}
-            {{- partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" .Err "errorLevel" $errorLevel )}}
+            {{ $msg := print $errorMsg ". " . }}
+            {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel )}}
         {{- else }}
             {{- $r = . }}
         {{ end }}
     {{- else }}
-        {{- partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+        {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
-    {{- with $page.Resources.GetMatch (strings.TrimPrefix "./" $u.Path) }} {{- /* Page */}}
+    {{- with $ctx.Page.Resources.GetMatch (strings.TrimPrefix "./" $u.Path) }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
         {{- /* Fallback: Search in associated pages */}}
@@ -29,7 +30,7 @@
         {{- with resources.Get $u.Path }} {{- /* Site */}}
             {{- $r = . }}
         {{- else }}
-        {{- partial "error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
+        {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
         {{- end }}   
     {{- end }}
 {{- end }}
