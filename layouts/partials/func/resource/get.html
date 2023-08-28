@@ -1,4 +1,4 @@
-{{- $name := "hugo-mod-resource – partial get-resource" }}
+{{- $name := "hugo-mod-resource – partial func/resource/get" }}
 
 {{- /* Initialize local variables with the values from the context map */}}
 {{- $url := .url }}
@@ -24,7 +24,7 @@
     {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
-        {{- $r = partial "func/get-page-resource-fallback" (dict "path" $path "ctx" $ctx) }}
+        {{- $r = partial "func/resource/page-fallback" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $r }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}

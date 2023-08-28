@@ -1,4 +1,4 @@
-## Function get-resource
+## Function resource/get
 
 The partial is designed for calls from the content via render hooks or shortcodes and can get all kinds of resources to give users the greatest flexibility.
 
@@ -13,4 +13,4 @@ Site resources
 Remote resources
 : Files with an absolute URL from anywhere on the net.
 
-**Warning:** The function _get-resource_ does **not fit** as a replacement for direct calls of Hugo’s resource functions in templates when the origin of a resource is predetermined and its handling needs to be specific.
+**Warning:** The function does **not fit** as a replacement for direct calls of Hugo’s resource functions in templates when the origin of a resource is predetermined and its handling needs to be specific.
