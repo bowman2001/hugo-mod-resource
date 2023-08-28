@@ -21,15 +21,16 @@
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
-    {{- with $ctx.Page.Resources.GetMatch (strings.TrimPrefix "./" $u.Path) }} {{- /* Page */}}
+    {{- $path := (strings.TrimPrefix "./" $u.Path) }}
+    {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
-        {{- /* Fallback: Search in associated pages */}}
+        {{- $r = partial "get-page-resource-alternative" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $r }}
         {{- with resources.Get $u.Path }} {{- /* Site */}}
             {{- $r = . }}
-        {{- else }}
+        {{- else }} {{- /* $r is still empty */}}
             {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
         {{- end }}   
     {{- end }}

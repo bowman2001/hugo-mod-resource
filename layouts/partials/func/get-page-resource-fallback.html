@@ -1,0 +1,11 @@
+{{- /* Initialize local variables with the values from the context map */}}
+{{- $ctx := .ctx }}
+{{- $path := .path }}
+ 
+{{- $r := "" }}
+{{- with $ctx.Page.Parent }}
+    {{- with .Page.Resources.GetMatch $path }}
+        {{- $r = . }}
+    {{- end }}
+{{- end }}
+{{- return $r }}
