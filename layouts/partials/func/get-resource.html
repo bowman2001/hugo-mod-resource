@@ -25,7 +25,7 @@
     {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
-        {{- $r = partial "get-page-resource-alternative" (dict "path" $path "ctx" $ctx) }}
+        {{- $r = partial "func/get-page-resource-alternative" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $r }}
         {{- with resources.Get $u.Path }} {{- /* Site */}}
