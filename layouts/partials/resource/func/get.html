@@ -11,7 +11,7 @@
 {{- if $url.IsAbs }} {{- /* Remote */}}
     {{- with resources.GetRemote $url.String }}
         {{- with .Err }}
-            {{ $msg := print $errorMsg ". " . }}
+            {{- $msg := print $errorMsg ". " . }}
             {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel ) }}
         {{- else }}
             {{- $r = . }}
@@ -24,7 +24,7 @@
     {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
-        {{- $r = partial "func/resource/page-fallback" (dict "path" $path "ctx" $ctx) }}
+        {{- $r = partial "resource/func/page-fallback" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $r }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}
