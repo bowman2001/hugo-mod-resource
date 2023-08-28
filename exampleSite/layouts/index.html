@@ -9,11 +9,12 @@
 <body>
 <h1>{{ .Title | site.Home.RenderString }}</h1>
 {{ .Content }}
-{{- $page := partial "func/get-resource" (dict "src" "test.yaml" "ctx" . "errorLevel" "warning") }}
-{{- $site := partial "func/get-resource" (dict "src" "style.css" "ctx" . "errorLevel" "warning") }}
-{{- $remote := partial "func/get-resource" (dict "src" "https://picsum.photos/100/50" "ctx" . "errorLevel" "warning") }}
+{{- readFile "get-resource.md" | site.Home.RenderString }}
+{{- $page := partial "func/get-resource" (dict "url" (urls.Parse "test.yaml") "ctx" . "errorLevel" "warning") }}
+{{- $site := partial "func/get-resource" (dict "url" (urls.Parse "style.css") "ctx" . "errorLevel" "warning") }}
+{{- $remote := partial "func/get-resource" (dict "url" (urls.Parse "https://picsum.photos/100/50") "ctx" . "errorLevel" "warning") }}
 
-<h2>Examples</h2>
+<h3>Demonstration</h3>
 <dl>
     <dt>Page resource</dt>
     <dd>Get 'test.yaml' in the root of the content folder: {{ $page }}</dd>
@@ -24,8 +25,8 @@
 </dl>
 <h3>Missing resources</h3>
 <p>Depending on the error level the function ignores them, warns about them or breaks the build. The tests here lead to empty variables and <code>get-resource</code> writes a warning to the console:</p>
-{{- $missing := partial "func/get-resource" (dict "src" "missing.yaml" "ctx" . "errorLevel" "warning") }}
-{{- $remotemissing := partial "func/get-resource" (dict "src" "https://picsum/100/50" "ctx" . "errorLevel" "warning") }}
+{{- $missing := partial "func/get-resource" (dict "url" (urls.Parse "missing.yaml") "ctx" . "errorLevel" "warning") }}
+{{- $remotemissing := partial "func/get-resource" (dict "src" (urls.Parse "https://picsum/100/50") "ctx" . "errorLevel" "warning") }}
 <dl>
     <dt>Local resource (for page or site)</dt>
     <dd>Get 'missing.yaml': {{ $missing }}</dd>

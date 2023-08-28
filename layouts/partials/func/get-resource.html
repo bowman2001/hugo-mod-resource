@@ -1,19 +1,18 @@
 {{- $name := "hugo-mod-resource – partial get-resource" }}
 
 {{- /* Initialize local variables with the values from the context map */}}
+{{- $url := .url }}
 {{- $ctx := .ctx }}
-{{- $src := .src }}
 {{- $errorLevel := .errorLevel }}
 
-{{- $u := urls.Parse $src }}
-{{- $errorMsg := printf "Unable to resolve the resource %q" $u.String }}
+{{- $errorMsg := printf "Unable to resolve the resource %q" $url.String }}
 
 {{- $r := "" }}
-{{- if $u.IsAbs }} {{- /* Remote */}}
-    {{- with resources.GetRemote $u.String }}
+{{- if $url.IsAbs }} {{- /* Remote */}}
+    {{- with resources.GetRemote $url.String }}
         {{- with .Err }}
             {{ $msg := print $errorMsg ". " . }}
-            {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel )}}
+            {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel ) }}
         {{- else }}
             {{- $r = . }}
         {{ end }}
@@ -21,14 +20,14 @@
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
     {{- end }}
 {{- else }}
-    {{- $path := (strings.TrimPrefix "./" $u.Path) }}
+    {{- $path := (strings.TrimPrefix "./" $url.Path) }}
     {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
         {{- $r = partial "func/get-page-resource-fallback" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $r }}
-        {{- with resources.Get $u.Path }} {{- /* Site */}}
+        {{- with resources.Get $url.Path }} {{- /* Site */}}
             {{- $r = . }}
         {{- else }} {{- /* $r is still empty */}}
             {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
