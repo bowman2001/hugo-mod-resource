@@ -1,0 +1,14 @@
+{{ $ctx := .ctx }}
+{{ $path := .path }}
+ 
+{{ $map := "" }}
+{{ with $ctx.Page.Parent }}
+    {{ with .Page.Resources.GetMatch $path }}
+        {{ with (partialCached "resource/func/helper/get-from-data" . . ) }}
+            {{ $map = . }}
+        {{ else }}
+            {{ $map = dict "r" . }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+{{ return $map }}

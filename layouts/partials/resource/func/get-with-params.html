@@ -1,4 +1,4 @@
-{{- $name := "hugo-mod-resource – partial func/resource/get" }}
+{{- $name := "hugo-mod-resource – partial func/resource/get-with-params" }}
 
 {{- /* Initialize local variables with the values from the context map */}}
 {{- $url := .url }}
@@ -7,14 +7,14 @@
 
 {{- $errorMsg := printf "Unable to resolve the resource %q" $url.String }}
 
-{{- $r := "" }}
+{{- $map := "" }}
 {{- if $url.IsAbs }} {{- /* Remote */}}
     {{- with resources.GetRemote $url.String }}
         {{- with .Err }}
             {{- $msg := print $errorMsg ". " . }}
             {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $msg "errorLevel" $errorLevel ) }}
         {{- else }}
-            {{- $r = . }}
+            {{- $map = dict "r" . }} {{- /* no params possible */}}
         {{ end }}
     {{- else }}
         {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
@@ -22,17 +22,22 @@
 {{- else }}
     {{- $path := (strings.TrimPrefix "./" $url.Path ) }}
     {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
-        {{- $r = . }}
+        {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
+        {{ with (partialCached "resource/func/helper/get-from-data" $args $args ) }}
+            {{- $map = . }}
+        {{ else }}
+            {{- $map = dict "r" . "params" .params }}
+        {{ end }}
     {{- else }}
-        {{- $r = partial "resource/func/helper/page-fallback" (dict "path" $path "ctx" $ctx) }}
+        {{- $map = partial "resource/func/helper/page-fallback-with-params" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
-    {{- if not $r }}
+    {{- if not $map }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}
-            {{- $r = . }}
-        {{- else }} {{- /* $r is still empty */}}
+            {{- $map = dict "r" . }}
+        {{- else }} {{- /* $map is still empty */}}
             {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
         {{- end }}   
     {{- end }}
 {{- end }}
 
-{{- return $r }}
+{{- return $map }}

@@ -13,6 +13,7 @@
 {{- $page := partial "resource/func/get" (dict "url" (urls.Parse "test.yaml") "ctx" . "errorLevel" "warning") }}
 {{- $site := partial "resource/func/get" (dict "url" (urls.Parse "style.css") "ctx" . "errorLevel" "warning") }}
 {{- $remote := partial "resource/func/get" (dict "url" (urls.Parse "https://picsum.photos/100/50") "ctx" . "errorLevel" "warning") }}
+{{- $data := partial "resource/func/get-with-params" (dict "url" (urls.Parse "data.yaml") "ctx" . "errorLevel" "warning") }}
 
 <h3>Demonstration</h3>
 <dl>
@@ -22,11 +23,13 @@
     <dd>Get 'style.css' in the assets folder: {{ $site }}</dd>
     <dt>Remote resource</dt>
     <dd>Get an image from 'https://picsum.photos/100/50': {{ $remote }}</dd>
+    <dt>Resource in data file</dt>
+    <dd>Read 'data.yaml' and get an image from 'https://picsum.photos/100/100': {{ $data }}</dd>
 </dl>
 <h3>Missing resources</h3>
 <p>Depending on the error level the function ignores them, warns about them or breaks the build. The tests here lead to empty variables and <code>get-resource</code> writes a warning to the console:</p>
 {{- $missing := partial "resource/func/get" (dict "url" (urls.Parse "missing.yaml") "ctx" . "errorLevel" "warning") }}
-{{- $remotemissing := partial "resource/func/get" (dict "src" (urls.Parse "https://picsum/100/50") "ctx" . "errorLevel" "warning") }}
+{{- $remotemissing := partial "resource/func/get" (dict "url" (urls.Parse "https://picsum/100/50") "ctx" . "errorLevel" "warning") }}
 <dl>
     <dt>Local resource (for page or site)</dt>
     <dd>Get 'missing.yaml': {{ $missing }}</dd>
