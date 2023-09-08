@@ -26,7 +26,7 @@
         {{ with (partialCached "resource/func/helper/get-from-data" $args $args ) }}
             {{- $map = . }}
         {{ else }}
-            {{- $map = dict "r" . "params" .params }}
+            {{- $map = dict "r" . "params" .Params }}
         {{ end }}
     {{- else }}
         {{- $map = partial "resource/func/helper/page-fallback-with-params" (dict "path" $path "ctx" $ctx) }}
