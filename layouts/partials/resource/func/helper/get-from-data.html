@@ -2,7 +2,7 @@
 {{- $ctx := .ctx }}
 {{- $errorLevel := .errorLevel }}
 
-{{- $map := "" }}
+{{- $map := dict }}
 {{- if (in (slice "yaml" "toml" "json") $data.MediaType.SubType ) }}
     {{- $params := transform.Unmarshal $data }}
     {{- $url := urls.Parse $params.src }} 

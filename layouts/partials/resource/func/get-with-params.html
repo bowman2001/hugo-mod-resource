@@ -21,7 +21,7 @@
     {{- end }}
 {{- else }}
     {{- $path := (strings.TrimPrefix "./" $url.Path ) }}
-    {{- with $ctx.Page.Resources.GetMatch $path }} {{- /* Page */}}
+    {{- with $ctx.Page.Resources.GetMatch (print "*" $path "*") }} {{- /* Page */}}
         {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
         {{ with (partialCached "resource/func/helper/get-from-data" $args $args ) }}
             {{- $map = . }}
@@ -33,7 +33,7 @@
     {{- end }}    
     {{- if not $map }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}
-            {{- $map = dict "r" . }}
+            {{- $map = dict "r" . }} {{- /* no params possible */}}
         {{- else }} {{- /* $map is still empty */}}
             {{- partial "md-error-msg" (dict "caller" $name "ctx" $ctx "errorMsg" $errorMsg "errorLevel" $errorLevel) }}
         {{- end }}   
