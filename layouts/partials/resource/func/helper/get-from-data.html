@@ -9,8 +9,7 @@
     {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
     {{- $r := partial "resource/func/get" $args $args }}
     {{- $map = merge $map (dict "r" $r "params" $params) }}
+    {{- warnf "map: %v" $map }}
 {{- end }}
-
-{{- warnf "map: %v" $map }}
 
 {{- return $map }}
