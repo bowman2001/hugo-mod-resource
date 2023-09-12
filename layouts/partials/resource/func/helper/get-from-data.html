@@ -11,4 +11,6 @@
     {{- $map = dict "r" $r "params" $params }}
 {{- end }}
 
+{{- warnf "map: %v" $map }}
+
 {{- return $map }}
