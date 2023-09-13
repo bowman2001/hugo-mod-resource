@@ -1,2 +1,3 @@
 src: "https://picsum.photos/100/100"
-caption: "A caption"
+caption: "Caption text"
+attr: "Attribution"
