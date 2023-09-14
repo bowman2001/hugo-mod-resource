@@ -1,15 +1,13 @@
-{{ $params := .paramsOld }}
+{{ $params := dict }}
 
-{{ with .paramsNew }}
-    {{ with .caption }}
-        {{ $params = merge $params (dict (slice "caption" "text") . ) }}
-    {{ end }}
-    {{ with .attr }}
-        {{ $params = merge $params (dict (slice "caption" "attr") . ) }}
-    {{ end }}
-    {{ with .attrlink }}
-        {{ $params = merge $params (dict (slice "caption" "attrlink") ( . | lower ) ) }}
-    {{ end }}    
+{{ with .caption }}
+    {{ $params = merge $params (dict (slice "caption" "text") . ) }}
 {{ end }}
+{{ with .attr }}
+    {{ $params = merge $params (dict (slice "caption" "attr") . ) }}
+{{ end }}
+{{ with .attrlink }}
+    {{ $params = merge $params (dict (slice "caption" "attrlink") . ) }}
+{{ end }}    
 
 {{ return $params }}
