@@ -23,7 +23,7 @@
     {{- $path := (strings.TrimPrefix "./" $url.Path ) }}
     {{- with $ctx.Page.Resources.GetMatch (print "*" $path "*") }} {{- /* Page */}}
         {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
-        {{ with (partialCached "resource/func/helper/get-from-data" $args $args ) }}
+        {{ with (partial "resource/func/helper/get-from-data" $args $args ) }}
             {{- $map = . }}
         {{ else }}
             {{- $map = dict "resource" . "params" .Params }}
