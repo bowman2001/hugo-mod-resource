@@ -7,8 +7,8 @@
     {{- $params := transform.Unmarshal $data }}
     {{- $url := urls.Parse $params.src }} 
     {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
-    {{- $r := partial "resource/func/get" $args $args }}
-    {{- $map = merge $map (dict "r" $r "params" $params) }}
+    {{- $resource := partial "resource/func/get" $args $args }}
+    {{- $map = merge $map (dict "resource" $resource "params" $params) }}
 {{- end }}
 
 {{- return $map }}
