@@ -4,10 +4,10 @@
 {{ $map := "" }}
 {{ with $ctx.Page.Parent }}
     {{ with .Page.Resources.GetMatch $path }}
-        {{ with (partialCached "resource/func/helper/get-from-data" . . ) }}
+        {{ with (partial "resource/func/helper/get-from-data" . ) }}
             {{ $map = . }}
         {{ else }}
-            {{ $map = dict "r" . }}
+            {{ $map = dict "resource" . }}
         {{ end }}
     {{ end }}
 {{ end }}
