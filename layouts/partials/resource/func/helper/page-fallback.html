@@ -3,7 +3,7 @@
  
 {{- $resource := "" }}
 {{- with $ctx.Page.Parent }}
-    {{- with .Page.Resources.GetMatch $path }}
+    {{- with .Page.Resources.GetMatch (print "*" $path "*") }}
         {{- $resource = . }}
     {{- end }}
 {{- end }}
