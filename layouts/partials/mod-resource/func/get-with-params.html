@@ -23,13 +23,13 @@
     {{- $path := (strings.TrimPrefix "./" $url.Path ) }}
     {{- with $ctx.Page.Resources.GetMatch (print "*" $path "*") }} {{- /* Page */}}
         {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
-        {{ with (partial "resource/func/helper/get-from-data" $args $args ) }}
+        {{ with (partial "mod-resource/func/helper/get-from-data" $args $args ) }}
             {{- $map = . }}
         {{ else }}
             {{- $map = dict "resource" . "params" .Params }}
         {{ end }}
     {{- else }}
-        {{- $map = partial "resource/func/helper/page-fallback-with-params" (dict "path" $path "ctx" $ctx) }}
+        {{- $map = partial "mod-resource/func/helper/page-fallback-with-params" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $map }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}

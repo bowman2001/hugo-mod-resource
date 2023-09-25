@@ -24,7 +24,7 @@
     {{- with $ctx.Page.Resources.GetMatch (print "*" $path "*") }} {{- /* Page */}}
         {{- $r = . }}
     {{- else }}
-        {{- $r = partial "resource/func/helper/page-fallback" (dict "path" $path "ctx" $ctx) }}
+        {{- $r = partial "mod-resource/func/helper/page-fallback" (dict "path" $path "ctx" $ctx) }}
     {{- end }}    
     {{- if not $r }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}
