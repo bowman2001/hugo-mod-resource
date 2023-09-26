@@ -3,7 +3,6 @@ languageCode: en-us
 title: Hugo-mod-resource example site
 
 disableKinds:
-  - "page"
   - "taxonomy"
 
 module:
