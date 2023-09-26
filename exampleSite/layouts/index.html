@@ -12,7 +12,7 @@
 {{- readFile "get-resource.md" | site.Home.RenderString }}
 {{- $page := partial "mod-resource/func/get" (dict "url" (urls.Parse "test?q=empty") "ctx" . "errorLevel" "warning") }}
 {{- $site := partial "mod-resource/func/get" (dict "url" (urls.Parse "style.css") "ctx" . "errorLevel" "warning") }}
-{{- $remote := partial "mod-resource/func/get" (dict "url" (urls.Parse "https://picsum.photos/100/50") "ctx" . "errorLevel" "warning") }}
+{{- $remote := partial "mod-resource/func/get-with-params" (dict "url" (urls.Parse "https://picsum.photos/100/50") "ctx" . "errorLevel" "warning") }}
 {{- $data := partial "mod-resource/func/get-with-params" (dict "url" (urls.Parse "data.yaml") "ctx" . "errorLevel" "warning") }}
 
 <h3>Demonstration</h3>
@@ -28,8 +28,8 @@
 </dl>
 <h3>Missing resources</h3>
 <p>Depending on the error level the function ignores them, warns about them or breaks the build. The tests here lead to empty variables and <code>get-resource</code> writes a warning to the console:</p>
-{{- $missing := partial "mod-resource/func/get" (dict "url" (urls.Parse "test-missing.yaml") "ctx" . "errorLevel" "warning") }}
-{{- $remotemissing := partial "mod-resource/func/get" (dict "url" (urls.Parse "https://picsum/100/50") "ctx" . "errorLevel" "warning") }}
+{{- $missing := partial "mod-resource/func/get-with-params" (dict "url" (urls.Parse "test-missing") "ctx" . "errorLevel" "warning") }}
+{{- $remotemissing := partial "mod-resource/func/get-with-params" (dict "url" (urls.Parse "https://picsum/100/50") "ctx" . "errorLevel" "warning") }}
 <dl>
     <dt>Local resource (for page or site)</dt>
     <dd>Get 'test-missing.yaml': <strong>{{ $missing }}</strong></dd>

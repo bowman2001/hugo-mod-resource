@@ -29,7 +29,7 @@
             {{- $map = dict "resource" . "params" .Params }}
         {{ end }}
     {{- else }}
-    1   {{- $args := dict "path" $path "ctx" $ctx }}
+    1   {{- $args := dict "path" $path "ctx" $ctx "errorLevel" $errorLevel }}
         {{- $map = partial "mod-resource/func/helper/page-fallback-with-params" $args }}
     {{- end }}    
     {{- if not $map }}

@@ -2,12 +2,12 @@
 {{- $ctx := .ctx }}
 {{- $errorLevel := .errorLevel }}
 
-{{- $map := dict }}
+{{- $map := "" }}
 {{- if (in (slice "yaml" "toml" "json") $data.MediaType.SubType ) }}
     {{- $params := transform.Unmarshal $data }}
     {{- $url := urls.Parse $params.src }} 
     {{- $args := dict "url" $url "ctx" $ctx "errorLevel" $errorLevel }}
-    {{- with (partial "mod-resource/func/get" $args $args) }}
+    {{- with (partial "mod-resource/func/get" $args) }}
         {{- $map = merge $map (dict "resource" . "params" $params) }}
     {{- end }}
 {{- end }}
