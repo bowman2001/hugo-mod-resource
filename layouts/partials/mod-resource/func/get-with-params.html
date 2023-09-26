@@ -5,8 +5,6 @@
 {{- $ctx := .ctx }}
 {{- $errorLevel := .errorLevel }}
 
-
-
 {{- $map := "" }}
 {{- if $url.IsAbs }} {{- /* Remote */}}
     {{- $errorMsg := printf "Unable to resolve the resource %q" $url.String }}
@@ -25,13 +23,14 @@
     {{- $errorMsg := printf "Unable to resolve the resource %q" $path }}
     {{- with $ctx.Page.Resources.GetMatch (print "*" $path "*") }} {{- /* Page */}}
         {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
-        {{ with (partial "mod-resource/func/helper/get-from-data" $args $args ) }}
+        {{ with (partial "mod-resource/func/helper/get-from-data" $args ) }}
             {{- $map = . }}
         {{ else }}
             {{- $map = dict "resource" . "params" .Params }}
         {{ end }}
     {{- else }}
-        {{- $map = partial "mod-resource/func/helper/page-fallback-with-params" (dict "path" $path "ctx" $ctx) }}
+    1   {{- $args := dict "path" $path "ctx" $ctx }}
+        {{- $map = partial "mod-resource/func/helper/page-fallback-with-params" $args }}
     {{- end }}    
     {{- if not $map }}
         {{- with resources.Get $url.Path }} {{- /* Site */}}
