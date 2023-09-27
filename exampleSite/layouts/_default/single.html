@@ -9,14 +9,30 @@
 <body>
 <h1>{{ .Title | site.Home.RenderString }}</h1>
 {{ .Content }}
-{{- $page := partial "mod-resource/func/get" (dict "url" (urls.Parse "test?q=empty") "ctx" . "errorLevel" "warning") }}
+{{- $page := partial "mod-resource/func/get" (dict "url" (urls.Parse "test") "ctx" . "errorLevel" "warning") }}
 {{- $site := partial "mod-resource/func/get" (dict "url" (urls.Parse "style.css") "ctx" . "errorLevel" "warning") }}
 {{- $remote := partial "mod-resource/func/get" (dict "url" (urls.Parse "https://picsum.photos/100/50") "ctx" . "errorLevel" "warning") }}
 {{- $data := partial "mod-resource/func/get-with-params" (dict "url" (urls.Parse "data.yaml") "ctx" . "errorLevel" "warning") }}
-<h3>Demonstration</h3>
+<h2>Demonstration</h2>
+<h3>Existing resources</h3>
 <dl>
     <dt>Page resource</dt>
-    <dd>Get 'test?q=empty' in the root of the content folder: <strong>{{ $page }}</strong></dd>
+    <dd>Get 'test' in the root of the content folder: <strong>{{ $page }}</strong></dd>
+    <dt>Site resource</dt>
+    <dd>Get 'style.css' in the assets folder: <strong>{{ $site }}</strong></dd>
+    <dt>Remote resource</dt>
+    <dd>Get an image from 'https://picsum.photos/100/50': <strong>{{ $remote }}</strong></dd>
+    <dt>Resource in data file</dt>
+    <dd>Read 'data.yaml' and get an image from 'https://picsum.photos/100/100': <strong>{{ $data }}</strong></dd>
+</dl>
+<h3>Missing resources</h3>
+{{- $page := partial "mod-resource/func/get" (dict "url" (urls.Parse "test-missing") "ctx" . "errorLevel" "warning") }}
+{{- $site := partial "mod-resource/func/get" (dict "url" (urls.Parse "style-missing.css") "ctx" . "errorLevel" "warning") }}
+{{- $remote := partial "mod-resource/func/get" (dict "url" (urls.Parse "https://picsum/100") "ctx" . "errorLevel" "warning") }}
+{{- $data := partial "mod-resource/func/get-with-params" (dict "url" (urls.Parse "data-missing.yaml") "ctx" . "errorLevel" "warning") }}
+<dl>
+    <dt>Page resource</dt>
+    <dd>Get 'test' in the root of the content folder: <strong>{{ $page }}</strong></dd>
     <dt>Site resource</dt>
     <dd>Get 'style.css' in the assets folder: <strong>{{ $site }}</strong></dd>
     <dt>Remote resource</dt>
