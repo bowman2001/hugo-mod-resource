@@ -2,14 +2,16 @@
 
 {{ $params := dict }}
 
-{{ with .caption }}
-    {{ $params = merge $params (dict (slice "caption" "text") . ) }}
+{{ if not (eq .caption "no" )}}
+    {{ with .caption }}
+        {{ $params = merge $params (dict (slice "caption" "text") . ) }}
+    {{ end }}
+    {{ with .attr }}
+        {{ $params = merge $params (dict (slice "caption" "attr") . ) }}
+    {{ end }}
+    {{ with .attrlink }}
+        {{ $params = merge $params (dict (slice "caption" "attrlink") . ) }}
+    {{ end }}    
 {{ end }}
-{{ with .attr }}
-    {{ $params = merge $params (dict (slice "caption" "attr") . ) }}
-{{ end }}
-{{ with .attrlink }}
-    {{ $params = merge $params (dict (slice "caption" "attrlink") . ) }}
-{{ end }}    
 
 {{ return $params }}
