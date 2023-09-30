@@ -26,11 +26,11 @@
         {{ $resource = . }}
     {{ else }}
         {{ $args := dict "path" $path "ctx" $ctx }}
-        {{ $resource = (partialCached "mod-resource/func/helper/page-fallback" $args $args) }}
+        {{ $resource = (partial "mod-resource/func/helper/page-fallback" $args) }}
     {{ end }}
     {{ with $resource }}
         {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
-        {{ with (partialCached "mod-resource/func/helper/get-from-data" $args $args) }}
+        {{ with (partial "mod-resource/func/helper/get-from-data" $args) }}
             {{- $map = . }}
         {{ else }}
             {{- $map = dict "resource" . "params" .Params }}
