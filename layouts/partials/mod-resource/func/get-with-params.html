@@ -29,8 +29,8 @@
         {{ $resource = (partial "mod-resource/func/helper/page-fallback" $args) }}
     {{ end }}
     {{ with $resource }}
-        {{ $args := dict "data" . "ctx" $ctx "errorLevel" $errorLevel }}
-        {{ with (partial "mod-resource/func/helper/get-from-data" $args) }}
+        {{ $args := dict "file" . "ctx" $ctx "errorLevel" $errorLevel }}
+        {{ with (partial "mod-resource/func/helper/get-from-file" $args) }}
             {{- $map = . }}
         {{ else }}
             {{- $map = dict "resource" . "params" .Params }}
