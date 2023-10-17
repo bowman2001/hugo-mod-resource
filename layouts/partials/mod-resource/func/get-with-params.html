@@ -20,7 +20,7 @@
     {{- end }}
 {{- else }}
     {{- $path := (strings.TrimPrefix "./" $url.Path ) }}
-    {{- $errorMsg := printf "Unable to resolve the resource %q" $path }}
+    {{- $errorMsg := printf "Unable to resolve the resource %q." $path }}
     {{ $resource := "" }}
     {{- with $ctx.Page.Resources.GetMatch (print $path "*") }} {{- /* Page */}}
         {{ $resource = . }}
