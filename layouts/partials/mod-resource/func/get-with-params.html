@@ -7,7 +7,7 @@
 
 {{- $map := "" }}
 {{- if $url.IsAbs }} {{- /* Remote */}}
-    {{- $errorMsg := printf "Unable to resolve the resource %q" $url.String }}
+    {{- $errorMsg := printf "Unable to resolve the resource %q." $url.String }}
     {{- with resources.GetRemote $url.String }}
         {{- with .Err }}
             {{- $msg := print $errorMsg ". " . }}
