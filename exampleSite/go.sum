@@ -2,3 +2,5 @@ github.com/bowman2001/hugo-mod-error-message v0.0.0-20230827105339-00c160f7b8ba 
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230827105339-00c160f7b8ba/go.mod h1:s473WVJh6WZSTryMc/OSxp5F1pRAoMw73ClzmbUcbRk=
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230828202921-a80cf9b12869 h1:7KwUAvBgPzUM60+Mmwj3fc2MHIqYpa/op8C7wbB9XaE=
 github.com/bowman2001/hugo-mod-error-message v0.0.0-20230828202921-a80cf9b12869/go.mod h1:s473WVJh6WZSTryMc/OSxp5F1pRAoMw73ClzmbUcbRk=
+github.com/bowman2001/hugo-mod-error-message v0.3.0 h1:16Osd3j9FYHVdinWTTSL5sww5tcbiNvmcQQYhy2Imzw=
+github.com/bowman2001/hugo-mod-error-message v0.3.0/go.mod h1:qOtBS8WaRgnWHFVWXqvah1V2bYYWX4sUD7l524QJrgU=
